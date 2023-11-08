@@ -4,13 +4,19 @@ import {
   type PluginTransformResultArgs,
 } from "kysely";
 
-import { PrefixOperationNodeTransformer } from "./transformers";
+import {
+  TablePrefixOperationNodeTransformer,
+  type TablePrefixOperationNodeTransformerOptions,
+} from "./transformers";
+
+export type TablePrefixPluginOptions =
+  TablePrefixOperationNodeTransformerOptions;
 
 export class TablePrefixPlugin implements KyselyPlugin {
-  readonly #prefixTransformer: PrefixOperationNodeTransformer;
+  readonly #prefixTransformer: TablePrefixOperationNodeTransformer;
 
-  constructor(prefix: string) {
-    this.#prefixTransformer = new PrefixOperationNodeTransformer(prefix);
+  constructor(options: TablePrefixPluginOptions) {
+    this.#prefixTransformer = new TablePrefixOperationNodeTransformer(options);
   }
 
   transformQuery(args: PluginTransformQueryArgs) {

@@ -1,12 +1,20 @@
 import { OperationNodeTransformer, type TableNode } from "kysely";
 
-export class PrefixOperationNodeTransformer extends OperationNodeTransformer {
+export interface TablePrefixOperationNodeTransformerOptions {
+  prefix: string;
+  exclude?: string[];
+}
+
+export class TablePrefixOperationNodeTransformer extends OperationNodeTransformer {
   readonly #prefix: string;
 
-  constructor(prefix: string) {
+  readonly #exclude: string[];
+
+  constructor(options: TablePrefixOperationNodeTransformerOptions) {
     super();
 
-    this.#prefix = prefix;
+    this.#prefix = options.prefix;
+    this.#exclude = options.exclude ?? [];
   }
 
   protected transformTable(node: TableNode): TableNode {
@@ -18,7 +26,9 @@ export class PrefixOperationNodeTransformer extends OperationNodeTransformer {
         ...transformedNode.table,
         identifier: {
           ...transformedNode.table.identifier,
-          name: `${this.#prefix}_${transformedNode.table.identifier.name}`,
+          name: this.#exclude.includes(transformedNode.table.identifier.name)
+            ? transformedNode.table.identifier.name
+            : `${this.#prefix}_${transformedNode.table.identifier.name}`,
         },
       },
     };

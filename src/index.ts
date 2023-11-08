@@ -1,3 +1,3 @@
-import { TablePrefixPlugin } from "./plugins";
+import { TablePrefixPlugin, type TablePrefixPluginOptions } from "./plugins";
 
-export { TablePrefixPlugin };
+export { TablePrefixPlugin, type TablePrefixPluginOptions };
