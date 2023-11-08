@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "test": "ava",
+    "test": "NODE_OPTIONS='--import=tsx/cjs' ava",
     "lint": "biome lint ./src/*",
     "fmt": "biome format --write ./src/*",
     "ci": "biome ci ./src/*",
@@ -17,7 +17,11 @@
     "@changesets/cli": "~2.26.2",
     "@commitlint/cli": "~18.2.0",
     "@commitlint/config-conventional": "~18.1.0",
+    "@types/better-sqlite3": "~7.6.7",
+    "ava": "~5.3.1",
+    "better-sqlite3": "~9.0.0",
     "husky": "~8.0.3",
+    "tsx": "~3.14.0",
     "typescript": "~5.2.2"
   },
   "license": "MIT",
