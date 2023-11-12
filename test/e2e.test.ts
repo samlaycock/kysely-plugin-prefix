@@ -53,6 +53,14 @@ test("table prefix", async (t) => {
 
   t.is(createTable.sql, 'create table "prefix_test" ("id" text)');
 
+  const createIndex = prefix.schema
+    .createIndex("idx_test")
+    .on("test")
+    .columns(["id"])
+    .compile();
+
+  t.is(createIndex.sql, 'create index "idx_test" on "prefix_test" ("id")');
+
   const insertInto = prefix.insertInto("test").values({ id: "1" }).compile();
 
   t.is(insertInto.sql, 'insert into "prefix_test" ("id") values (?)');
@@ -107,7 +115,7 @@ test("table prefix w/ excludes", async (t) => {
     plugins: [
       new TablePrefixPlugin({
         prefix: "prefix",
-        exclude: ["kysely_migration", "kysely_migration_lock"],
+        exclude: ["test", "kysely_migration", "kysely_migration_lock"],
       }),
     ],
   });
@@ -117,27 +125,35 @@ test("table prefix w/ excludes", async (t) => {
     .addColumn("id", "text")
     .compile();
 
-  t.is(createTable.sql, 'create table "prefix_test" ("id" text)');
+  t.is(createTable.sql, 'create table "test" ("id" text)');
+
+  const createIndex = prefix.schema
+    .createIndex("idx_test")
+    .on("test")
+    .columns(["id"])
+    .compile();
+
+  t.is(createIndex.sql, 'create index "idx_test" on "test" ("id")');
 
   const insertInto = prefix.insertInto("test").values({ id: "1" }).compile();
 
-  t.is(insertInto.sql, 'insert into "prefix_test" ("id") values (?)');
+  t.is(insertInto.sql, 'insert into "test" ("id") values (?)');
 
   const selectFrom = prefix.selectFrom("test").selectAll().compile();
 
-  t.is(selectFrom.sql, 'select * from "prefix_test"');
+  t.is(selectFrom.sql, 'select * from "test"');
 
   const updateTable = prefix.updateTable("test").set({ id: "2" }).compile();
 
-  t.is(updateTable.sql, 'update "prefix_test" set "id" = ?');
+  t.is(updateTable.sql, 'update "test" set "id" = ?');
 
   const deleteFrom = prefix.deleteFrom("test").where("id", "=", "2").compile();
 
-  t.is(deleteFrom.sql, 'delete from "prefix_test" where "id" = ?');
+  t.is(deleteFrom.sql, 'delete from "test" where "id" = ?');
 
   const dropTable = prefix.schema.dropTable("test").compile();
 
-  t.is(dropTable.sql, 'drop table "prefix_test"');
+  t.is(dropTable.sql, 'drop table "test"');
 
   const migrationProvider = new MigrationProvider([
     {
