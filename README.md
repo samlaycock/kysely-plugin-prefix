@@ -8,7 +8,7 @@ database and you want to avoid table and index name/migration collisions.
 
 ## Install
 
-`npm i kysely kysely-prefix-plugin`
+`npm i kysely kysely-plugin-prefix`
 
 
 ## Usage
@@ -17,7 +17,7 @@ database and you want to avoid table and index name/migration collisions.
 
 ```ts
 import { Kysely, SqliteDialect } from "kysely";
-import { TablePrefixPlugin } from "kysely-prefix-plugin";
+import { TablePrefixPlugin } from "kysely-plugin-prefix";
 import Database from "better-sqlite3";
 
 interface ExampleDatabase {
@@ -41,7 +41,7 @@ const users = await db.selectFrom("users").selectAll().execute();
 
 ```ts
 import { Kysely, SqliteDialect } from "kysely";
-import { IndexPrefixPlugin } from "kysely-prefix-plugin";
+import { IndexPrefixPlugin } from "kysely-plugin-prefix";
 
 interface ExampleDatabase {
   users: {
@@ -71,7 +71,7 @@ table/index names to the optional `exclude` option on either plugin.
 
 ```ts
 import { Kysely, SqliteDialect } from "kysely";
-import { TablePrefixPlugin } from "kysely-prefix-plugin";
+import { TablePrefixPlugin } from "kysely-plugin-prefix";
 import Database from "better-sqlite3";
 
 interface ExampleDatabase {
