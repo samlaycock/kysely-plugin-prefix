@@ -4,7 +4,7 @@ Automatically add prefixes to your table names with
 [Kysely](https://kysely.dev/).
 
 This is handy for when you have multiple `Kysely` clients connected to the same
-database and you want to avoid table name/migration collisions.
+database and you want to avoid table and index name/migration collisions.
 
 ## Install
 
@@ -12,6 +12,8 @@ database and you want to avoid table name/migration collisions.
 
 
 ## Usage
+
+### Tables
 
 ```ts
 import { Kysely, SqliteDialect } from "kysely";
@@ -35,10 +37,37 @@ const db = new Kysely<ExampleDatabase>({
 const users = await db.selectFrom("users").selectAll().execute();
 ```
 
-### Excludes
+### Indexes
 
-You can exclude tables from being prefixed by passing an array of table names to
-the optional `exclude` option.
+```ts
+import { Kysely, SqliteDialect } from "kysely";
+import { IndexPrefixPlugin } from "kysely-prefix-plugin";
+
+interface ExampleDatabase {
+  users: {
+    id: number;
+    name: string;
+  };
+}
+
+const db = new Kysely<ExampleDatabase>({
+  dialect: new SqliteDialect({
+    database: new Database(':memory:'),
+  }),
+  plugins: [new IndexPrefixPlugin({ prefix: "prefix" })],
+});
+
+const users = await db.schema
+  .createIndex("idx_users_id")
+  .on("users")
+  .columns(["id"])
+  .compile(); // Index will be named "prefix_idx_users_id"
+```
+
+## Excludes
+
+You can exclude tables (or indexes) from being prefixed by passing an array of
+table/index names to the optional `exclude` option on either plugin.
 
 ```ts
 import { Kysely, SqliteDialect } from "kysely";
