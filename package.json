@@ -1,6 +1,6 @@
 {
   "name": "kysely-plugin-prefix",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -25,7 +25,10 @@
     "typescript": "~5.2.2"
   },
   "license": "MIT",
-  "keywords": ["kysely", "plugin"],
+  "keywords": [
+    "kysely",
+    "plugin"
+  ],
   "dependencies": {
     "kysely": "~0.26.3"
   }

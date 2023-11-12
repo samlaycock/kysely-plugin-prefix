@@ -1,5 +1,11 @@
 # kysely-plugin-prefix
 
+## 1.1.0
+
+### Minor Changes
+
+- Add IndexPrefixPlugin
+
 ## 1.0.3
 
 ### Patch Changes
