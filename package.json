@@ -25,10 +25,7 @@
     "typescript": "~5.2.2"
   },
   "license": "MIT",
-  "keywords": [
-    "kysely",
-    "plugin"
-  ],
+  "keywords": ["kysely", "plugin"],
   "dependencies": {
     "kysely": "~0.26.3"
   }

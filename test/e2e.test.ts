@@ -8,7 +8,7 @@ import {
   SqliteDialect,
 } from "kysely";
 
-import { TablePrefixPlugin } from "../src/plugins";
+import { IndexPrefixPlugin, TablePrefixPlugin } from "../src";
 
 export type Migrations = MigrationInfo[];
 
@@ -39,7 +39,7 @@ interface TestDatabase {
   };
 }
 
-test("prefix", async (t) => {
+test("table prefix", async (t) => {
   const db = new Database(":memory:");
   const prefix = new Kysely<TestDatabase>({
     dialect: new SqliteDialect({ database: db }),
@@ -100,7 +100,7 @@ test("prefix", async (t) => {
   ]);
 });
 
-test("prefix w/ excludes", async (t) => {
+test("table prefix w/ excludes", async (t) => {
   const db = new Database(":memory:");
   const prefix = new Kysely<TestDatabase>({
     dialect: new SqliteDialect({ database: db }),
@@ -164,4 +164,46 @@ test("prefix w/ excludes", async (t) => {
     { name: "kysely_migration" },
     { name: "kysely_migration_lock" },
   ]);
+});
+
+test("index prefix", async (t) => {
+  const db = new Database(":memory:");
+  const prefix = new Kysely<TestDatabase>({
+    dialect: new SqliteDialect({ database: db }),
+    plugins: [new IndexPrefixPlugin({ prefix: "prefix" })],
+  });
+
+  const createIndex = prefix.schema
+    .createIndex("idx_test")
+    .on("test")
+    .columns(["id"])
+    .compile();
+
+  t.is(createIndex.sql, 'create index "prefix_idx_test" on "test" ("id")');
+
+  const dropIndex = prefix.schema.dropIndex("idx_test").compile();
+
+  t.is(dropIndex.sql, 'drop index "prefix_idx_test"');
+});
+
+test("index prefix w/ excludes", async (t) => {
+  const db = new Database(":memory:");
+  const prefix = new Kysely<TestDatabase>({
+    dialect: new SqliteDialect({ database: db }),
+    plugins: [
+      new IndexPrefixPlugin({ prefix: "prefix", exclude: ["idx_test"] }),
+    ],
+  });
+
+  const createIndex = prefix.schema
+    .createIndex("idx_test")
+    .on("test")
+    .columns(["id"])
+    .compile();
+
+  t.is(createIndex.sql, 'create index "idx_test" on "test" ("id")');
+
+  const dropIndex = prefix.schema.dropIndex("idx_test").compile();
+
+  t.is(dropIndex.sql, 'drop index "idx_test"');
 });
