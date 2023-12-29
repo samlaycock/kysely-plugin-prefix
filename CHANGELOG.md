@@ -1,5 +1,11 @@
 # kysely-plugin-prefix
 
+## 1.1.1
+
+### Patch Changes
+
+- 274084c: Add new build pipeline
+
 ## 1.1.0
 
 ### Minor Changes
