@@ -1,16 +1,35 @@
 {
   "name": "kysely-plugin-prefix",
   "version": "1.1.0",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.mjs",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.es.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs.js"
+      }
+    }
+  },
+  "files": ["dist"],
+  "sideEffects": false,
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
+    "build": "vite build",
+    "prepare": "pnpm run build",
+    "publish": "changeset publish",
     "test": "NODE_OPTIONS='--import=tsx/cjs' ava",
-    "lint": "biome lint ./src/*",
-    "fmt": "biome format --write ./src/*",
-    "ci": "biome ci ./src/*",
-    "init": "husky install"
+    "tsc": "tsc"
+  },
+  "keywords": ["kysely", "plugin"],
+  "author": "samuel.laycock@cloudmix.dev",
+  "license": "MIT",
+  "dependencies": {
+    "kysely": "~0.26.3"
   },
   "devDependencies": {
     "@biomejs/biome": "~1.3.3",
@@ -22,14 +41,8 @@
     "better-sqlite3": "~9.0.0",
     "husky": "~8.0.3",
     "tsx": "~3.14.0",
-    "typescript": "~5.2.2"
-  },
-  "license": "MIT",
-  "keywords": [
-    "kysely",
-    "plugin"
-  ],
-  "dependencies": {
-    "kysely": "~0.26.3"
+    "typescript": "~5.2.2",
+    "vite": "~5.0.10",
+    "vite-plugin-dts": "~3.7.0"
   }
 }
