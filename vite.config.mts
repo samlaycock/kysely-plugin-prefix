@@ -13,7 +13,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "String Replace Transform Stream",
+      name: "Kysely Prefix Plugin",
       formats: ["es", "cjs"],
       fileName: (format) =>
         `index.${format}.${format === "cjs" ? "js" : "mjs"}`,
