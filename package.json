@@ -1,18 +1,18 @@
 {
   "name": "kysely-plugin-prefix",
   "version": "1.1.1",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.es.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.es.mjs"
+        "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.cjs.js"
+        "default": "./dist/index.js"
       }
     }
   },
@@ -21,9 +21,9 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "vite build",
-    "prepare": "pnpm run build",
+    "build": "tsup",
     "publish": "changeset publish",
+    "changeset": "changeset",
     "test": "NODE_OPTIONS='--import=tsx/cjs' ava",
     "tsc": "tsc"
   },
@@ -33,21 +33,18 @@
   ],
   "author": "samuel.laycock@cloudmix.dev",
   "license": "MIT",
-  "dependencies": {
-    "kysely": "~0.26.3"
-  },
   "devDependencies": {
-    "@biomejs/biome": "~1.3.3",
-    "@changesets/cli": "~2.26.2",
-    "@commitlint/cli": "~18.2.0",
-    "@commitlint/config-conventional": "~18.1.0",
+    "@biomejs/biome": "~1.9.4",
+    "@changesets/cli": "~2.27.9",
+    "@commitlint/cli": "~19.5.0",
+    "@commitlint/config-conventional": "~19.5.0",
     "@types/better-sqlite3": "~7.6.7",
-    "ava": "~5.3.1",
+    "ava": "~6.2.0",
     "better-sqlite3": "~9.0.0",
-    "husky": "~8.0.3",
-    "tsx": "~3.14.0",
-    "typescript": "~5.2.2",
-    "vite": "~5.0.10",
-    "vite-plugin-dts": "~3.7.0"
+    "husky": "~9.1.6",
+    "kysely": "~0.27.4",
+    "tsup": "~8.3.5",
+    "tsx": "~4.19.2",
+    "typescript": "~5.6.3"
   }
 }
