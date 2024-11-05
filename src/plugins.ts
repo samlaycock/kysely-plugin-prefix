@@ -1,7 +1,7 @@
-import {
-  type KyselyPlugin,
-  type PluginTransformQueryArgs,
-  type PluginTransformResultArgs,
+import type {
+  KyselyPlugin,
+  PluginTransformQueryArgs,
+  PluginTransformResultArgs,
 } from "kysely";
 
 import {

@@ -22,9 +22,11 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
-    "publish": "changeset publish",
-    "changeset": "changeset",
     "test": "NODE_OPTIONS='--import=tsx/cjs' ava",
+    "changeset": "changeset",
+    "publish": "changeset publish",
+    "fmt": "pnpx @biomejs/biome format --write src/*.ts",
+    "lint": "pnpx @biomejs/biome lint src/*.ts",
     "tsc": "tsc"
   },
   "keywords": [
