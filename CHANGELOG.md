@@ -1,5 +1,11 @@
 # kysely-plugin-prefix
 
+## 1.2.0
+
+### Minor Changes
+
+- b434f6d: Update build tools
+
 ## 1.1.1
 
 ### Patch Changes
