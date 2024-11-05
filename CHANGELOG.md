@@ -1,5 +1,11 @@
 # kysely-plugin-prefix
 
+## 1.2.1
+
+### Patch Changes
+
+- 4735073: Add peer dependencies
+
 ## 1.2.0
 
 ### Minor Changes
